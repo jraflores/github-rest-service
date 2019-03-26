@@ -1,0 +1,17 @@
+{
+  "application":{
+    "name": "Github Connector"
+  },
+  "logging":{
+    "default": "debug",
+    "routes": "debug",
+    "services": "debug"
+  },
+  "port": 3100,
+  "apps":{
+    "github": {
+      "userId": "",
+      "personalAccessToken": ""
+    }
+  }
+}

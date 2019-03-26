@@ -1,0 +1,17 @@
+{
+  "application":{
+    "name": "Github Connector"
+  },
+  "logging":{
+    "default": "info",
+    "routes": "info",
+    "services": "info"
+  },
+  "port": 3100,
+  "apps":{
+    "github": {
+      "userId": "",
+      "personalAccessToken": ""
+    }
+  }
+}
