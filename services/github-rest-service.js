@@ -13,6 +13,16 @@ The Search API has a custom rate limit. For requests using Basic Authentication,
 you can make up to 30 requests per minute.
 
 For unauthenticated requests, the rate limit allows you to make up to 10 requests per minute.
+
+To authenticate your requests, update the /config/<environment>.json
+    ...
+    "apps":{
+      "github": {
+        "userId": "",               <-- update me
+        "personalAccessToken": ""   <-- update me
+      }
+    }
+    ...
 */
 class GithubService {
   constructor(userId='', personalAccessToken='', logger=LOGGER) {
@@ -21,6 +31,15 @@ class GithubService {
     this.LOGGER = logger;
     this.baseUrl = 'https://api.github.com';
     this.defaultSearchOpts = {q:'',page:1,per_page:10,sort:'score',order:'desc'};
+    this.headers={
+      'User-Agent': 'jraflores/github-rest-service',
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    if( userId && personalAccessToken ) {
+      let token = bota(userId + ':' + personalAccessToken);
+      this.headers['Authorization'] = `basic ${token}`;
+    }
   }
 
   /*
@@ -33,7 +52,7 @@ class GithubService {
       .then( opts => {
         let url = `${this.baseUrl}/search/users?q=${opts.q}&page=${opts.page}&per_page=${opts.per_page}&sort=${opts.sort}&order=${opts.order}`;
         self.LOGGER.debug( `Request to URL: ${url}` );
-        return httpGet( url );
+        return httpGet( url, this.headers );
       })
       .then( results => {
         //self.LOGGER.debug( JSON.stringify( results ) );
@@ -56,7 +75,7 @@ class GithubService {
       .then( opts => {
         let url = `${this.baseUrl}/search/repositories?q=${opts.q}&page=${opts.page}&per_page=${opts.per_page}&sort=${opts.sort}&order=${opts.order}`;
         self.LOGGER.debug( `Request to URL: ${url}` );
-        return httpGet( url );
+        return httpGet( url, this.headers );
       })
       .then( results => {
         //self.LOGGER.debug( JSON.stringify( results ) );
@@ -79,7 +98,7 @@ class GithubService {
       .then( opts => {
         let url = `${this.baseUrl}/search/code?q=${opts.q}&page=${opts.page}&per_page=${opts.per_page}&sort=${opts.sort}&order=${opts.order}`;
         self.LOGGER.debug( `Request to URL: ${url}` );
-        return httpGet( url );
+        return httpGet( url, this.headers );
       })
       .then( results => {
         //self.LOGGER.debug( JSON.stringify( results ) );
@@ -102,7 +121,7 @@ class GithubService {
       .then( opts => {
         let url = `${this.baseUrl}/search/issues?q=${opts.q}&page=${opts.page}&per_page=${opts.per_page}&sort=${opts.sort}&order=${opts.order}`;
         self.LOGGER.debug( `Request to URL: ${url}` );
-        return httpGet( url );
+        return httpGet( url, this.headers );
       })
       .then( results => {
         //self.LOGGER.debug( JSON.stringify( results ) );
@@ -125,7 +144,7 @@ class GithubService {
       .then( opts => {
         let url = `${this.baseUrl}/search/topics?q=${opts.q}&page=${opts.page}&per_page=${opts.per_page}&sort=${opts.sort}&order=${opts.order}`;
         self.LOGGER.debug( `Request to URL: ${url}` );
-        return httpGet( url );
+        return httpGet( url, this.headers );
       })
       .then( results => {
         //self.LOGGER.debug( JSON.stringify( results ) );
@@ -148,7 +167,7 @@ class GithubService {
       .then( opts => {
         let url = `${this.baseUrl}/search/labels?q=${opts.q}&page=${opts.page}&per_page=${opts.per_page}&sort=${opts.sort}&order=${opts.order}`;
         self.LOGGER.debug( `Request to URL: ${url}` );
-        return httpGet( url );
+        return httpGet( url, this.headers );
       })
       .then( results => {
         //self.LOGGER.debug( JSON.stringify( results ) );
