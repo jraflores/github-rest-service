@@ -37,7 +37,7 @@ class GithubService {
       'Content-Type': 'application/json'
     };
     if( userId && personalAccessToken ) {
-      let token = bota(userId + ':' + personalAccessToken);
+      let token = btoa(userId + ':' + personalAccessToken);
       this.headers['Authorization'] = `basic ${token}`;
     }
   }
