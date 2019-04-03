@@ -4,8 +4,8 @@ const expect = chai.expect;
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 
-// Config running under 'test' ------------------------------------------------
-var config = require('.././config')("test");
+// Config running under 'local' ------------------------------------------------
+var config = require('.././config')("local");
 
 // Service to Test -------------------------------------------------------------
 var GitHubRestService = require('../services/github-rest-service');
@@ -64,17 +64,25 @@ describe('Test Runner for github-rest-service', () => {
     });
   });
 
+  describe('SearchCommits Tests', () => {
+    it('Search for a list: "initial commit"', () => {
+      return githubRest.SearchCommits({q: "initial commit"}).then((results) => {
+        expect(results.items).to.have.lengthOf(10);
+      });
+    });
+  });
+
   describe('SearchCode Tests', () => {
     it('Search for a list: "java"', () => {
-      return githubRest.SearchRepositories({q: "java"}).then((results) => {
+      return githubRest.SearchCode({q: "java"}).then((results) => {
         expect(results.items).to.have.lengthOf(10);
       });
     });
   });
 
   describe('SearchIssues Tests', () => {
-    it('Search for a list: "windows"', () => {
-      return githubRest.SearchIssues({q: "windows"}).then((results) => {
+    it('Search for a list: "linux"', () => {
+      return githubRest.SearchIssues({q: "linux"}).then((results) => {
         expect(results.items).to.have.lengthOf(10);
       });
     });
@@ -82,16 +90,16 @@ describe('Test Runner for github-rest-service', () => {
 
   describe('SearchTopics Tests', () => {
     it('Search for a list: "nodejs"', () => {
-      return githubRest.SearchIssues({q: "nodejs"}).then((results) => {
+      return githubRest.SearchTopics({q: "nodejs"}).then((results) => {
         expect(results.items).to.have.lengthOf(10);
       });
     });
   });
 
   describe('SearchLabels Tests', () => {
-    it('Search for a list: "html"', () => {
-      return githubRest.SearchIssues({q: "html"}).then((results) => {
-        expect(results.items).to.have.lengthOf(10);
+    it('Search for: "html"', () => {
+      return githubRest.SearchLabels({q: "html", repository_id: "176592549"}).then((results) => {
+        expect(results.items).to.have.lengthOf(0);
       });
     });
   });

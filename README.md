@@ -20,8 +20,8 @@ service.SearchUsers( searchOptions )
 });
 ```    
 
-Run as Microservice
-- npm start
+Run as a Service
+- npm start OR nodemon
 ```
 POST  http://localhost:3100/github/search/users
 body  { 'users': 'username' }
@@ -30,5 +30,5 @@ POST  http://localhost:3100/github/search/repositories
 body  { 'repositories': 'html', 'per_page': 50, 'page': 5 }
 ```
 
-Includes automated testing using mocha, chai (in progress)
+Includes automated testing using mocha, chai
 - npm test
