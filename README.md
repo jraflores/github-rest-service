@@ -62,10 +62,12 @@ service.SearchUsers( searchOptions )
 - npm start OR nodemon
 ```
 POST  http://localhost:3100/github/search/users
-body  { 'users': 'username' }
+body  { "users": "username" }
+body  { "q": "username" }
 
 POST  http://localhost:3100/github/search/repositories
-body  { 'repositories': 'html', 'per_page': 50, 'page': 5 }
+body  {"repositories": "html", "per_page": "50", "page": "5"}
+body  {"q": "html", "per_page": "50", "page": "5"}
 ```
 
 ### Includes automated testing using mocha, chai
